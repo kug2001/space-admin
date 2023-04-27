@@ -1,14 +1,16 @@
-import { getMenus } from '@/utils/generatePage';
+import { getFiles, getMenus } from '@/utils/generatePage';
 import { Grid } from '@mui/material';
 import { Sidebar } from '@/components/molecules/sidebar/Sidebar';
 import React from 'react';
 
-interface HomeProps {
+interface PostProps {
+  data: any;
   menus: [string, { pageName: string; path: string }[]][];
 }
 
-export default function Home(props: HomeProps) {
-  const { menus } = props;
+export default function PostPage(props: PostProps) {
+  const { data, menus } = props;
+
   return (
     <>
       <Grid item xs={2}>
@@ -22,10 +24,13 @@ export default function Home(props: HomeProps) {
 }
 
 export async function getStaticProps() {
+  const data = await getFiles();
   const menus = await getMenus();
+  // const { pageName } = JSON.parse(data);
 
   return {
     props: {
+      data,
       menus
     }
   };
